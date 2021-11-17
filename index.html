@@ -1,38 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <style>
+    html {
+      /* Smooth scroll can be configured here or in your JS */
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color:black;
+      color: white;
+    }
     div.contentbox {
-      background: #FFF;
-      height: 500px;
+      background: rgb(58, 58, 58);
+      height: 300px;
       margin: 20px;
       font-size: 28px;
       border: #CCC 1px dashed;
+      border-radius: 30px;
+      padding: 20px;
+    }
+    button {
+      background-color: darkgreen;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px;
+      height: 50px;
+      margin: 10px;
+    }
+    button:hover {
+      background-color: green;
     }
   </style>
-  <script src="autoScrollTo.js"></script>
+
+  <script defer src="autoScrollTo.js"></script>
+
 </head>
 
 <body>
-  <h2 id="myheading">JavaScript Smooth Animated Auto Scroll Tutorial</h2>
+  <h2 id="myheading">Smooth Auto Scroll</h2>
 
-  <button href="#" onclick="return false;" onmouseup="autoScrollTo('div1');">Document Section 1</button><br />
-  <button href="#" onclick="return false;" onmouseup="autoScrollTo('div2');">Document Section 2</button><br />
-  <button href="#" onclick="return false;" onmouseup="autoScrollTo('div3');">Document Section 3</button><br />
-  <button href="#" onclick="return false;" onmouseup="autoScrollTo('div4');">Document Section 4</button><br />
+  <div id="btns-container" >
+  </div>
 
-  
-  <div id="div1" class="contentbox">Div 1 content...</div>
-  <button href="#" onclick="return false;" onmousedown="resetScroller('myheading');">go back to top</button>
-  
-  <div id="div2" class="contentbox">Div 2 content...</div>
-  <button href="#" onclick="return false;" onmousedown="resetScroller('myheading');">go back to top</button>
-  
-  <div id="div3" class="contentbox">Div 3 content...</div>
-  <button href="#" onclick="return false;" onmousedown="resetScroller('myheading');">go back to top</button>
-  
-  <div id="div4" class="contentbox">Div 4 content...</div>
-  <button href="#" onclick="return false;" onmousedown="resetScroller('myheading');">go back to top</button>
+  <div id="contentbox-container">
+  </div>
 
 </body>
 </html>

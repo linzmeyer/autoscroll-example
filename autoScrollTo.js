@@ -1,42 +1,79 @@
-let scrollY = 0;
-let distance = 40;
-let slowScrollSpeed = 30;
-let quickScrollSpeed = 0;
+let count;
+do {
+  count = parseInt(prompt('How many sections would you like?', 10));
+  
+} while (isNaN(count));
 
-function autoScrollTo(elementId) {
-  console.log(document.getElementById(elementId).offsetTop);
+const scrollIntoViewOptions = {
+  block: "start",
+  inline: "nearest",
+  // behavior: "smooth" <-- handled by css!
+}
 
 
-  let currentY = window.pageYOffset;
-  let targetY = document.getElementById(elementId).offsetTop;
 
-  let bodyHeight = document.body.offsetHeight;
-  let yPosition = currentY + window.innerHeight;
+// **********************************************
+// *** EVENT HANDLERS
+// **********************************************
+function handleScrollIntoView(e) {
+  const el = document.getElementById(`div${e.target.value}`);
+  el.scrollIntoView(scrollIntoViewOptions);
+}
 
-  let timeoutID = setTimeout(()=>autoScrollTo(elementId), slowScrollSpeed);
+function handleScrollToTop(e) {
+  const el = document.getElementById("myheading");
+  el.scrollIntoView(scrollIntoViewOptions);
+}
 
-  if (yPosition > bodyHeight) {
-    clearTimeout(timeoutID);
-  } else {
-    if (currentY < targetY - distance) {
-      scrollY = currentY + distance;
-      window.scroll(0, scrollY);
-    } else {
-      clearTimeout(timeoutID);
-    }
+
+
+// **********************************************
+// *** RENDERS
+// **********************************************
+function renderContentBoxes(num) {
+  num = Number(num);
+
+  const contentBoxContainer = document.getElementById('contentbox-container');
+
+  for ( let i = 1; i < num; i++) {
+    const contentBoxNode = document.createElement('div');
+    const divTextNode = document.createTextNode(`Content Section ${i}`);
+    contentBoxNode.appendChild(divTextNode);
+    contentBoxNode.classList.add('contentbox');
+    contentBoxNode.setAttribute('id', `div${i}`);
+
+    contentBoxContainer.appendChild(contentBoxNode);
+
+    const backToTopBtn = document.createElement('button');
+    backToTopBtn.setAttribute('value', i)
+    backToTopBtn.addEventListener('mousedown', handleScrollToTop);
+    const textNode = document.createTextNode("Go To Top");
+    backToTopBtn.appendChild(textNode);
+    contentBoxNode.appendChild(backToTopBtn);
   }
 
 }
 
 
-function resetScroller(elementId) {
-  let currentY = window.pageYOffset;
-  let targetY = document.getElementById(elementId).offsetTop;
-  let timeoutId = setTimeout(()=>resetScroller(elementId), quickScrollSpeed);
-  if (currentY > targetY) {
-    scrollY = currentY - distance;
-    window.scroll(0, scrollY);
-  } else {
-    clearTimeout(timeoutId);
+function renderBtns(num) {
+
+  num = Number(num);
+  const btnsContainer = document.getElementById('btns-container');
+
+  for ( let i = 1; i < num; i++) {
+
+    const btnNode = document.createElement("button");
+    btnNode.setAttribute('id', `btn${i}`);
+    btnNode.setAttribute('value', i);
+    btnNode.addEventListener('mouseup', handleScrollIntoView)
+
+    const textNode = document.createTextNode(`Go To Section ${i}`)
+    btnNode.appendChild(textNode);
+
+    btnsContainer.appendChild(btnNode);
   }
 }
+
+
+renderBtns(count);
+renderContentBoxes(count);
